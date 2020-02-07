@@ -1,0 +1,58 @@
+// Functional Component
+
+const React = require("react");
+const useState = require("react").useState();
+
+const App = () => {
+  
+  const [state, setState] = useState({
+    id: "Sample ID",
+    content: "Sample Content",
+    author: "Author Name"
+  });
+
+  const newQuote = () => {
+    fetch("https://api.quotable.io/random")
+      .then(res => res.json())
+      .then(data => {
+        setState({
+          id: data._id,
+          content: data.content,
+          author: data.author
+        });
+      })
+      .catch(console.log);
+  };
+
+  return (
+    <div className="container" id="quote-box">
+      <div className="card">
+        <div className="card-header">
+          {this.state.id !== "" ? (
+            <code className="col-sm-3 light">{state.id}</code>
+          ) : null}
+        </div>
+        <div className="card-body">
+          <h3 id="text">{state.content}</h3>
+          <br />
+          <blockquote id="author">{state.author}</blockquote>
+        </div>
+        <div className="card-footer">
+          <button className="btn btn-outline-info" id="new-quote" onClick={newQuote}>
+            New Quote
+          </button>
+          <a
+            className="btn btn-primary"
+            id="tweet-quote"
+            href="www.twitter.com/intent/tweet"
+            type="button"
+          >
+            <i className="fab fa-twitter"></i> Tweet
+          </a>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+module.exports = App;
